@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
     }
     private fun loadNews() {
         val queue = Volley.newRequestQueue(this)
-        var url = "https://saurav.tech/NewsAPI/top-headlines/category/health/in .json"
+        val url = "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url,null,
             {
                 val newsJsonArray = it.getJSONArray("articles")
@@ -57,8 +57,13 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
     }
 
     override fun onItemClicked(item: NewsDataModel) {
-        val builder = CustomTabsIntent.Builder()
-        val customTabsIntent = builder.build()
-        customTabsIntent.launchUrl(this, Uri.parse(item.newsUrl))
+       try {
+           val builder = CustomTabsIntent.Builder()
+           val customTabsIntent = builder.build()
+           customTabsIntent.launchUrl(this, Uri.parse(item.newsUrl))
+       }
+       catch (e:java.lang.Exception){
+           Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT).show()
+       }
     }
 }
